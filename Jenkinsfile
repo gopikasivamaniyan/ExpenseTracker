@@ -2,23 +2,24 @@ pipeline {
   agent any
   stages {
     stage('Build') {
-      steps {
+    steps {
         echo 'Compiling Java files...'
-        sh 'javac *.java'
+        bat 'javac *.java'
       }
     }
     stage('Test') {
-      steps {
+    steps {
         echo 'Running tests...'
-        sh 'java Main'
-      }
+        bat 'java YourMainClass'
     }
+  }
+
     stage('Package') {
-      steps {
+    steps {
         echo 'Creating JAR file...'
-        sh 'jar cf ExpenseTracker.jar *.class'
-      }
+        bat 'jar cf ExpenseTracker.jar *.class'
     }
+  }
   }
   post {
     success {
