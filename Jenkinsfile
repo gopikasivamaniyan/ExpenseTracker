@@ -9,8 +9,8 @@ pipeline {
     }
     stage('Test') {
     steps {
-        echo 'Running tests...'
-        bat 'java YourMainClass'
+        echo 'Running main class...'
+        bat 'java Main'
     }
   }
 
