@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        jdk 'jdk-17'   // same name as added in Jenkins tools
+        jdk 'java 17'   // same name as added in Jenkins tools
     }
 
     stages {
