@@ -1,33 +1,38 @@
 pipeline {
-  agent any
-  stages {
-    stage('Build') {
-    steps {
-        echo 'Compiling Java files...'
-        bat 'javac *.java'
-      }
+    agent any
+    tools {
+        jdk 'jdk-17'   // same name as added in Jenkins tools
     }
-    stage('Test') {
-    steps {
-        echo 'Running main class...'
-        bat 'java Main'
-    }
-  }
 
-    stage('Package') {
-    steps {
-        echo 'Creating JAR file...'
-        bat 'jar cf ExpenseTracker.jar *.class'
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Compiling Java files...'
+                bat 'javac *.java'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running main class...'
+                bat 'java Main'
+            }
+        }
+
+        stage('Package') {
+            steps {
+                echo 'Creating JAR file...'
+                bat 'jar cf ExpenseTracker.jar *.class'
+            }
+        }
     }
-  }
-  }
-  post {
-    success {
-      echo '✅ Build success! JAR file created.'
-      archiveArtifacts artifacts: '*.jar'
+
+    post {
+        success {
+            echo '✅ Build completed successfully!'
+        }
+        failure {
+            echo '❌ Build failed.'
+        }
     }
-    failure {
-      echo '❌ Build failed.'
-    }
-  }
 }
