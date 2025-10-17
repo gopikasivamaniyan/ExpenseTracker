@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        jdk 'java 17'   // same name as added in Jenkins tools
+        jdk 'java 17'
     }
 
     stages {
@@ -21,8 +21,9 @@ pipeline {
 
         stage('Package') {
             steps {
-                echo 'Creating JAR file...'
-                bat 'jar cf ExpenseTracker.jar *.class'
+                echo 'Creating executable JAR file...'
+                bat 'echo Main-Class: Main > manifest.txt'
+                bat 'jar cfm ExpenseTracker.jar manifest.txt *.class'
             }
         }
     }
@@ -30,6 +31,7 @@ pipeline {
     post {
         success {
             echo '✅ Build completed successfully!'
+            archiveArtifacts artifacts: 'ExpenseTracker.jar', fingerprint: true
         }
         failure {
             echo '❌ Build failed.'
